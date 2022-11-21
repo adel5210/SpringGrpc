@@ -1,15 +1,32 @@
 package com.adel.springgrpc.client;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.adel.springgrpc.HelloRequest;
+import com.adel.springgrpc.HelloResponse;
+import com.adel.springgrpc.HelloServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 
-@RestController
-@RequestMapping("/api/v1/grpc")
 public class GrpcClient {
 
-    @GetMapping
-    public void executeGrpcClient(){
+    public static void main(String[] args) {
+        executeGrpcClient();
+    }
 
+    public static void executeGrpcClient(){
+        final ManagedChannel channel = ManagedChannelBuilder
+                .forAddress("localhost", 8080)
+                .usePlaintext()
+                .build();
+
+        final HelloServiceGrpc.HelloServiceBlockingStub stub =
+                HelloServiceGrpc.newBlockingStub(channel);
+
+        final HelloResponse helloResponse = stub.hello(HelloRequest.newBuilder()
+                .setFirstName("Adel")
+                .setLastName(" GRPC ")
+                .build());
+
+        System.out.println("Response receive\n"+helloResponse);
+        channel.shutdown();
     }
 }
