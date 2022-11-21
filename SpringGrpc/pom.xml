@@ -39,6 +39,12 @@
         </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <scope>runtime</scope>
+            <version>1.50.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
             <version>1.50.2</version>
         </dependency>
@@ -54,7 +60,7 @@
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.6.1</version>
+                <version>1.6.2</version>
             </extension>
         </extensions>
         <plugins>
@@ -76,13 +82,12 @@
                 <version>0.6.1</version>
                 <configuration>
                     <protocArtifact>
-                        com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
+                        com.google.protobuf:protoc:3.17.2:exe:${os.detected.classifier}
                     </protocArtifact>
                     <pluginId>grpc-java</pluginId>
                     <pluginArtifact>
-                        io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
+                        io.grpc:protoc-gen-grpc-java:1.40.1:exe:${os.detected.classifier}
                     </pluginArtifact>
-<!--                    <outputDirectory>${basedir}/src/main/java</outputDirectory>-->
                 </configuration>
                 <executions>
                     <execution>
